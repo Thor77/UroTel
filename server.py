@@ -18,6 +18,7 @@ config.set('Server', 'port', '9987')
 
 config.read('config.ini')
 
+secret = config.get('Server', 'secret')
 access_token = config.get('Telegram', 'access_token')
 api_base = 'https://api.telegram.org/bot{}'.format(access_token)
 webhook_url = 'https://urotel.crapwa.re/uptimerobot'

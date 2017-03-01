@@ -19,6 +19,7 @@ Usage
 * **POST Value (JSON Format)**
 ```json
 {
+    "secret": "secret set in your config",
     "monitor": {
         "id": "*monitorID*",
         "url": "*monitorURL*",
@@ -46,3 +47,4 @@ Configuration
 |-|-|
 |host|Host of the UroTel-server|
 |port|Port of the UroTel-server|
+|secret|Secret used to ensure validity of Webhook-calls|
