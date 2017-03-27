@@ -78,6 +78,11 @@ def telegram_webhook():
     return HTTPResponse(status=204)
 
 
+@route('/')
+def index():
+    return 'UroTel (Uptimerobot Telegram notifier)'
+
+
 if __name__ == '__main__':
     run(
         host=config.get('Server', 'host'),
