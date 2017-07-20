@@ -1,13 +1,14 @@
 from collections import namedtuple
 
 import requests
-
-from bottle import HTTPResponse, request, route, run
+from bottle import Bottle, HTTPResponse, request
 
 try:
     from configparser import ConfigParser
 except ImportError:
     from ConfigParser import ConfigParser
+
+app = Bottle()
 
 # parse config
 config = ConfigParser()
@@ -37,7 +38,7 @@ def send_telegram_message(chatid, message):
     requests.post(api_base + '/sendMessage', json=data)
 
 
-@route('/uptimerobot', method='POST')
+@app.route('/uptimerobot', method='POST')
 def uptimerobot_webhook():
     # parse query-data into named tuple's
     query = request.query
@@ -59,7 +60,7 @@ def uptimerobot_webhook():
     return HTTPResponse(status=204)
 
 
-@route('/telegram', method='POST')
+@app.route('/telegram', method='POST')
 def telegram_webhook():
     if request.json:
         chatid = request.json.get('message', {}).get('chat', {}).get('id')
@@ -78,13 +79,13 @@ def telegram_webhook():
     return HTTPResponse(status=204)
 
 
-@route('/')
+@app.route('/')
 def index():
     return 'UroTel (Uptimerobot Telegram notifier)'
 
 
 if __name__ == '__main__':
-    run(
+    app.run(
         host=config.get('Server', 'host'),
         port=config.getint('Server', 'port')
     )
