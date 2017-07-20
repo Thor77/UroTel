@@ -61,7 +61,8 @@ def telegram_webhook():
                 'Hello there, now create a UptimeRobot-alert:',
                 'Alert Contact Type: `Web-Hook`',
                 'Friendly Name: `Telegram`',
-                'URL to Notify: `{webhook}?chatid={chatid}&`'.format(
+                'URL to Notify: `{webhook}?secret=<server.secret in '
+                'your config>&chatid={chatid}&`'.format(
                     chatid=chatid, webhook=webhook_url)
             ]))
 
