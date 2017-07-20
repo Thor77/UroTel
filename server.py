@@ -3,25 +3,12 @@ from collections import namedtuple
 import requests
 from bottle import Bottle, HTTPResponse, request
 
-try:
-    from configparser import ConfigParser
-except ImportError:
-    from ConfigParser import ConfigParser
-
 app = Bottle()
+app.config.load_config('config.ini')
 
-# parse config
-config = ConfigParser()
-# init config
-config.add_section('Server')
-config.set('Server', 'host', 'localhost')
-config.set('Server', 'port', '9987')
-
-config.read('config.ini')
-
-secret = config.get('Server', 'secret')
-access_token = config.get('Telegram', 'access_token')
-api_base = 'https://api.telegram.org/bot{}'.format(access_token)
+api_base = 'https://api.telegram.org/bot{}'.format(
+    app.config['telegram.access_token']
+)
 webhook_url = 'https://urotel.crapwa.re/uptimerobot'
 
 Alert = namedtuple('Alert', [
@@ -86,6 +73,6 @@ def index():
 
 if __name__ == '__main__':
     app.run(
-        host=config.get('Server', 'host'),
-        port=config.getint('Server', 'port')
+        host=app.config.get('server.host', '127.0.0.1'),
+        port=int(app.config.get('server.port', 8080))
     )
