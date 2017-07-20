@@ -9,7 +9,6 @@ app.config.load_config('config.ini')
 api_base = 'https://api.telegram.org/bot{}'.format(
     app.config['telegram.access_token']
 )
-webhook_url = 'https://urotel.crapwa.re/uptimerobot'
 
 Alert = namedtuple('Alert', [
     'type', 'name', 'details', 'contacts', 'datetime'])
@@ -61,9 +60,17 @@ def telegram_webhook():
                 'Hello there, now create a UptimeRobot-alert:',
                 'Alert Contact Type: `Web-Hook`',
                 'Friendly Name: `Telegram`',
-                'URL to Notify: `{webhook}?secret=<server.secret in '
+                'URL to Notify: `{url}/uptimerobot?secret=<server.secret in '
                 'your config>&chatid={chatid}&`'.format(
-                    chatid=chatid, webhook=webhook_url)
+                    chatid=chatid,
+                    url=app.config.get(
+                        'server.url',
+                        ':'.join((
+                            app.config['server.host'],
+                            app.config['server.port']
+                        ))
+                    )
+                )
             ]))
 
     return HTTPResponse(status=204)
