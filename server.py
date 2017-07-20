@@ -29,6 +29,8 @@ def send_telegram_message(chatid, message):
 def uptimerobot_webhook():
     # parse query-data into named tuple's
     query = request.query
+    if query.secret != app.config['server.secret']:
+        return HTTPResponse(status=401)
     alert = Alert(
         query.alertType, query.alertTypeFriendlyName, query.alertDetails,
         query.monitorAlertContacts, query.alertDateTime
