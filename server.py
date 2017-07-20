@@ -25,7 +25,7 @@ def send_telegram_message(chatid, message):
     requests.post(api_base + '/sendMessage', json=data)
 
 
-@app.route('/uptimerobot', method='POST')
+@app.route('/uptimerobot')
 def uptimerobot_webhook():
     # parse query-data into named tuple's
     query = request.query
