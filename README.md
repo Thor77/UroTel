@@ -1,6 +1,6 @@
 UroTel
 ======
-Send UptimeRobot-notifications to Telegram
+Send [UptimeRobot](https://uptimerobot.com)-notifications to Telegram
 
 Installation
 ============
